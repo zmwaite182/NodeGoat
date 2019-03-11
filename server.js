@@ -1,6 +1,7 @@
 "use strict";
 
 var express = require("express");
+var cookieParser = require("cookie-parser");
 var favicon = require("serve-favicon");
 var bodyParser = require("body-parser");
 var session = require("express-session");
@@ -14,6 +15,7 @@ var marked = require("marked");
 //var helmet = require("helmet");
 //var nosniff = require('dont-sniff-mimetype');
 var app = express(); // Web framework to handle routing requests
+app.use(cookieParser());
 var routes = require("./app/routes");
 var config = require("./config/config"); // Application config properties
 /*
@@ -95,7 +97,8 @@ MongoClient.connect(config.db, function(err, db) {
         // Fix for A3 - XSS
         // TODO: Add "maxAge"
         cookie: {
-            httpOnly: true
+            httpOnly: true,
+            maxAge: 2 * 60 * 60 * 1000
             // Remember to start an HTTPS server to get this working
             // secure: true
         }
